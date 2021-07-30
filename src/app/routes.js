@@ -9,7 +9,7 @@ const routes = [
         exact: true
     },
     {
-        path: '/details',
+        path: '/details/:id',
         name: 'Details',
         component: DetailsPage,
         exact: true
