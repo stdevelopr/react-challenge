@@ -1,20 +1,24 @@
 import React from 'react'
 import PropTypes from 'prop-types';
 import { Link } from "react-router-dom";
-import { useGetShowEpisodesQuery } from '../../services/tvmaze'
+import StyledWrapper from './styles'
 
-const EpisodeList = ({ showId }) => {
-    const { data, isLoading, isError } = useGetShowEpisodesQuery(showId)
-    if (isError) return <div>An error has occurred!</div>
-    if (isLoading) return <div>Loading...</div>
-    if(!data) return <div>No data found...</div>
+const EpisodeList = ({ episodesList }) => {
 
     return (
-        <div>
-            {data.map(item => {
-                return <Link key={item.id} to={`/details/${item.id}`}>{item.name}</Link>
-            })}
-        </div>
+        <StyledWrapper>
+            <table>
+                <tbody>
+                {episodesList.map(item => {
+                    return <tr key={item.id}>
+                        <td>
+                            <Link to={`/details/${item.id}`}>{item.name}</Link>
+                        </td>
+                    </tr>
+                })}
+                </tbody>
+            </table>
+        </StyledWrapper>
     )
 }
 

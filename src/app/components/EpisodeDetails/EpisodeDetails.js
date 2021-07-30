@@ -1,23 +1,29 @@
 import React from 'react'
 import PropTypes from 'prop-types';
-import EpisodeItem from '../EpisodeListItem/EpisodeItem'
-import { useGetEpisodeDetailsQuery } from '../../services/tvmaze'
+import StyledWrapper from '../ShowItem/styles'
 
-const EpisodeDetails = ({ episodeId }) => {
-    const { data, isLoading, isError } = useGetEpisodeDetailsQuery(episodeId)
-    if (isError) return <div>An error has occurred!</div>
-    if (isLoading) return <div>Loading...</div>
-    if(!data) return <div>No data found...</div>
-
+const EpisodeDetails = ({ title, summary, imageLink }) => {
     return (
-        <EpisodeItem title={data.name} summary={data.summary} imageLink={data.image.original}/>
+        <StyledWrapper>
+            <div className='section-container'>
+                <div className="description-container">
+                    <h1>{title}</h1>
+                    <div dangerouslySetInnerHTML={{ __html: summary }} />
+                </div>
+                {imageLink &&
+                    <div className="img-container">
+                        <img src={imageLink} alt='wait' />
+                    </div>
+                }
+            </div>
+        </StyledWrapper>
     )
 }
 
 EpisodeDetails.propTypes = {
-    episodeId: PropTypes.oneOfType([
-        PropTypes.string,
-        PropTypes.number]).isRequired
+    title: PropTypes.string.isRequired,
+    summary: PropTypes.string,
+    imageLink: PropTypes.string,
 };
 
 export default EpisodeDetails
